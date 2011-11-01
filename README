@@ -1,0 +1,34 @@
+Survey Portlet
+by Chris Jurado, Johns Hopkins University Institute for Computational Medicine
+Designed for Liferay Version 6
+
+This portlet will allow someone with Preferences permissions on the portlet to create, save and select surveys.  The selected survey will be available for any user logged into the portal and will store their answers.
+
+Note: This portlet only stores answers.  Recalling them and displaying the data is not part of this portlet.
+
+To install:
+
+First, build this project:
+
+-Copy the folder into your local liferay SDK environment in the portlets folder.
+-Run the enclosed ant build script (ant deploy)
+-If your local environment is configured to automatically copy the resulting .war file into your Liferay Deploy folder, it will install automatically for you from there.  Otherwise you can manually copy the .war file into your Liferay deploy folder
+-OR-
+Upload the file through the Liferay GUI plugins installation screen.
+
+
+/*
+ Copyright 2011 Johns Hopkins University Institute for Computational Medicine
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */

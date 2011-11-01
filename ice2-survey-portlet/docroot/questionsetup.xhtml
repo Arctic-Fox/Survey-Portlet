@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:aui="http://portletfaces.org/alloyfaces/aui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ice="http://www.icesoft.com/icefaces/component"
+	xmlns:chat="http://java.sun.com/jsf/composite/chat"
+	xmlns:liferay-ui="http://portletfaces.org/liferayfaces/liferay-ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:icecore="http://www.icefaces.org/icefaces/core">
+
+	<h:outputText rendered="#{!configurationBacking.newSurvey}"
+		value="Editing survey #{configurationBacking.currentSurveyName}" />
+	<h:outputText rendered="#{configurationBacking.newSurvey}"
+		value="Creating survey " />
+	<ice:inputText id="surveyName"
+		rendered="#{configurationBacking.newSurvey}"
+		value="#{configurationBacking.currentSurveyName}" />
+
+	<ice:panelGroup rendered="#{configurationBacking.addPanelVisible}">
+		<h:outputText value="To create a new survey, simply click the " />
+		<h:graphicImage id="instructionadd" url="/css/liferay-images/add.png" />
+		<h:outputText value=" to use the survey builder wizard." />
+		<hr />
+
+		<ice:panelGrid columns="2" id="addPanel">
+			<h:outputText value="Click to add a new question to the survey: " />
+			<ice:commandLink actionListener="#{configurationBacking.addQuestion}" id="btnAddQuestion">
+				<h:graphicImage url="/css/liferay-images/add.png" />
+			</ice:commandLink>
+		</ice:panelGrid>
+	</ice:panelGroup>
+
+	<ice:panelGroup rendered="#{configurationBacking.addQuestionVisible}">
+		<icecore:singleSubmit>
+		<h:outputText
+			value="Please enter the text of the question and select the type of answer desired." />
+		<hr />
+		<ice:panelGrid id="addQuestion" columns="2">
+			<h:outputText value="Question text:" />
+			<ice:inputTextarea id="question" style="height:50px; width:200px;"
+				value="#{configurationBacking.addQuestionText}" />
+
+			<h:outputText value="Answer type:" />
+			<ice:selectOneMenu id="questiontype"
+				value="#{configurationBacking.selectedQuestionType}">
+				<f:selectItem id="type0" itemLabel="List of Options" itemValue="0" />
+				<f:selectItem id="type1" itemLabel="Yes/No" itemValue="1" />
+				<f:selectItem id="type2" itemLabel="Text" itemValue="2" />
+			</ice:selectOneMenu>
+		</ice:panelGrid>
+		<p />
+		<ice:commandButton actionListener="#{configurationBacking.addToSurvey}" id="btnAddQuestionToSurvey" value="Add" />
+		<ice:commandButton actionListener="#{configurationBacking.cancel}" id="btncancel" value="Cancel" />
+		</icecore:singleSubmit>
+	</ice:panelGroup>
+
+	<ice:panelGroup id="answerOptions"
+		rendered="#{configurationBacking.addAnswerOptionVisible}">
+		<h:outputText
+			value="Please enter the text for an available option for the question created." />
+		<hr />
+		<ice:panelGrid id="addAnswerOption" columns="2">
+			<h:outputText value="Option text:" />
+			<ice:inputTextarea id="answer" style="height:50px; width:200px;"
+				value="#{configurationBacking.addOptionText}" />
+		</ice:panelGrid>
+		<p />
+		<ice:commandButton actionListener="#{configurationBacking.addToQuestionAndDone}" id="btnAddOptionAndDone" value="Add to Question and Finish" />
+		<ice:commandButton actionListener="#{configurationBacking.addToQuestionAndContinue}" id="btnAddOptionAndContinue" value="Add to Question and Continue" />
+		<ice:commandButton actionListener="#{configurationBacking.cancel}" id="btnCancelOption" value="Cancel" />
+
+	</ice:panelGroup>
+
+	<hr />
+
+	<h:outputText style="font-weight:bold;"
+		value="Current Survey Questions" />
+
+	<p />
+	
+	<ice:dataTable id="componentTable" value="#{controlList.questionList}" var="questionItem">
+		<ice:column style="width:20px;">
+			<f:facet name="header">
+				<h:outputText value="Question Number"/>
+			</f:facet>
+			<h:outputText value="#{questionItem.questionNumberAsString}" />
+		</ice:column>
+		<ice:column style="width:90px;">
+			<f:facet name="header">
+				<h:outputText value="Question" />
+			</f:facet>
+			<h:outputText value="#{questionItem.questionText}" />
+		</ice:column>
+		<ice:column style="width:90px;">
+			<f:facet name="header">
+				<h:outputText value="Question Type" />
+			</f:facet>
+			<h:outputText value="#{questionItem.itemType}" />
+		</ice:column>
+		<ice:column style="width:20px;">
+			<f:facet name="header">
+				<h:outputText value="Delete" />
+			</f:facet>
+			<ice:commandLink action="#{controlList.delete(questionItem)}" id="btnDelete">
+					<h:graphicImage url="/css/liferay-images/close.png" />
+			</ice:commandLink>
+		</ice:column>
+	</ice:dataTable>
+	
+	<p/>
+	
+	<ice:commandButton actionListener="#{configurationBacking.saveSurvey}"
+		rendered="#{configurationBacking.newSurvey}" value="Save" />
+</ui:composition>

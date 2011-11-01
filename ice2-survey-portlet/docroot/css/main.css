@@ -1,0 +1,39 @@
+/*
+----------- Data Table Component classes
+*/
+.jhuDataTable {
+    width: 100%;
+}
+
+/*
+------------ Survey Questions Setup
+*/
+.surveyTable {
+	width:100%;
+}
+
+.surveyHeader {
+	width:100%;
+	font-weight:bold;
+	bgcolor:#C0C0C0;
+	border:3px;
+	frame:box;
+}
+
+}
+.column1 {
+	width:10%;
+}
+
+.column2 {
+	width:40%;
+}
+
+.column3 {
+	width:40%;
+}
+    
+.column4 {
+	width:10%;
+}
+

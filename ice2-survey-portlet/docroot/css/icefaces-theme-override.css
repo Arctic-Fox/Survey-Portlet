@@ -1,0 +1,32 @@
+.iceDatTbl {
+	max-height:200px;
+}
+
+/* Note the following fixes an ice:panelTab rendering height problem in Liferay 6 */
+.icePnlTbLblLnk, .LftTop, .MidTop, .RtTop {
+	line-height: 0px;
+}
+
+.icePnlTbLblLnk, .LftBtm, .MidBtm, .RtBtm {
+	line-height: 0px;
+}
+
+.icePnlTbLblLnk, .LftMid, .RtMid, .LftMid {
+	line-height: 15px;
+}
+
+.icePnlTbOffBtm .RtBtm, .LftBtm, .MidBtm {
+    height: 1px;
+}
+
+.icePnlTbOverBtm .RtBtm, .LftBtm, .MidBtm {
+    height: 1px;
+}
+
+.icePnlTbOnBtm  .RtBtm, .LftBtm, .MidBtm {
+    height: 1px;
+}
+
+.iceCmdSrtHdrAsc, .iceCmdSrtHdrDesc{
+	text-align: center;
+}

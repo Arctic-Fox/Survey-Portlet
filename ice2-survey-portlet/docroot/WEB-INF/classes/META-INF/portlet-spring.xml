@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyQuestionLocalService" class="com.jhu.cvrg.portal.survey.service.impl.SurveyQuestionLocalServiceImpl" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyQuestionLocalServiceUtil" class="com.jhu.cvrg.portal.survey.service.SurveyQuestionLocalServiceUtil">
+		<property name="service" ref="com.jhu.cvrg.portal.survey.service.SurveyQuestionLocalService" />
+	</bean>
+	<bean id="com.jhu.cvrg.portal.survey.service.persistence.SurveyQuestionPersistence" class="com.jhu.cvrg.portal.survey.service.persistence.SurveyQuestionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyQuestionOptionLocalService" class="com.jhu.cvrg.portal.survey.service.impl.SurveyQuestionOptionLocalServiceImpl" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyQuestionOptionLocalServiceUtil" class="com.jhu.cvrg.portal.survey.service.SurveyQuestionOptionLocalServiceUtil">
+		<property name="service" ref="com.jhu.cvrg.portal.survey.service.SurveyQuestionOptionLocalService" />
+	</bean>
+	<bean id="com.jhu.cvrg.portal.survey.service.persistence.SurveyQuestionOptionPersistence" class="com.jhu.cvrg.portal.survey.service.persistence.SurveyQuestionOptionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyAnswerLocalService" class="com.jhu.cvrg.portal.survey.service.impl.SurveyAnswerLocalServiceImpl" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyAnswerLocalServiceUtil" class="com.jhu.cvrg.portal.survey.service.SurveyAnswerLocalServiceUtil">
+		<property name="service" ref="com.jhu.cvrg.portal.survey.service.SurveyAnswerLocalService" />
+	</bean>
+	<bean id="com.jhu.cvrg.portal.survey.service.persistence.SurveyAnswerPersistence" class="com.jhu.cvrg.portal.survey.service.persistence.SurveyAnswerPersistenceImpl" parent="basePersistence" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyLocalService" class="com.jhu.cvrg.portal.survey.service.impl.SurveyLocalServiceImpl" />
+	<bean id="com.jhu.cvrg.portal.survey.service.SurveyLocalServiceUtil" class="com.jhu.cvrg.portal.survey.service.SurveyLocalServiceUtil">
+		<property name="service" ref="com.jhu.cvrg.portal.survey.service.SurveyLocalService" />
+	</bean>
+	<bean id="com.jhu.cvrg.portal.survey.service.persistence.SurveyPersistence" class="com.jhu.cvrg.portal.survey.service.persistence.SurveyPersistenceImpl" parent="basePersistence" />
+</beans>

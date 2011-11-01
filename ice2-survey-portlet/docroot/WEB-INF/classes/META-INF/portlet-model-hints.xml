@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<model-hints>
+	<model name="com.jhu.cvrg.portal.survey.model.SurveyQuestion">
+		<field name="surveyQuestionId" type="long" />
+		<field name="surveyId" type="long" />
+		<field name="question" type="String" />
+		<field name="type" type="int" />
+		<field name="displayorder" type="int" />
+	</model>
+	<model name="com.jhu.cvrg.portal.survey.model.SurveyQuestionOption">
+		<field name="surveyQuestionOptionId" type="long" />
+		<field name="surveyQuestionId" type="long" />
+		<field name="question" type="String" />
+		<field name="displayorder" type="int" />
+	</model>
+	<model name="com.jhu.cvrg.portal.survey.model.SurveyAnswer">
+		<field name="surveyAnswerId" type="long" />
+		<field name="surveyQuestionId" type="long" />
+		<field name="surveyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="answer" type="String" />
+	</model>
+	<model name="com.jhu.cvrg.portal.survey.model.Survey">
+		<field name="surveyId" type="long" />
+		<field name="communityId" type="long" />
+		<field name="surveyName" type="String" />
+	</model>
+</model-hints>

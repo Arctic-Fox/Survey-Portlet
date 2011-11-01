@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionModelImpl">
+		<attributes>
+			<id name="surveyQuestionId" />
+			<basic name="surveyId" />
+			<basic name="question" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="displayorder" />
+			<transient name="primaryKey" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionOptionModelImpl">
+		<attributes>
+			<id name="surveyQuestionOptionId" />
+			<basic name="surveyQuestionId" />
+			<basic name="question" />
+			<basic name="displayorder" />
+			<transient name="primaryKey" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jhu.cvrg.portal.survey.model.impl.SurveyAnswerModelImpl">
+		<attributes>
+			<id name="surveyAnswerId" />
+			<basic name="surveyQuestionId" />
+			<basic name="surveyId" />
+			<basic name="userId" />
+			<basic name="answer" />
+			<transient name="primaryKey" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.jhu.cvrg.portal.survey.model.impl.SurveyModelImpl">
+		<attributes>
+			<id name="surveyId" />
+			<basic name="communityId" />
+			<basic name="surveyName" />
+			<transient name="primaryKey" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionImpl" name="SurveyQuestion">
+		<table name="JHU_SurveyQuestion" />
+		<attributes />
+	</entity>
+	<entity class="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionOptionImpl" name="SurveyQuestionOption">
+		<table name="JHU_SurveyQuestionOption" />
+		<attributes />
+	</entity>
+	<entity class="com.jhu.cvrg.portal.survey.model.impl.SurveyAnswerImpl" name="SurveyAnswer">
+		<table name="JHU_SurveyAnswer" />
+		<attributes />
+	</entity>
+	<entity class="com.jhu.cvrg.portal.survey.model.impl.SurveyImpl" name="Survey">
+		<table name="JHU_Survey" />
+		<attributes />
+	</entity>
+</entity-mappings>

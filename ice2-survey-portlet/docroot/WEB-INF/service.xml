@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.0.0//EN"
+"http://www.liferay.com/dtd/liferay-service-builder_6_0_0.dtd">
+<service-builder package-path="com.jhu.cvrg.portal.survey">
+	<author>Chris Jurado</author>
+	<namespace>JHU</namespace>
+	<entity name="SurveyQuestion" local-service="true" remote-service="false">
+		<column name="surveyQuestionId" type="long" primary="true" />
+		<column name="surveyId" type="long" />
+		<column name="question" type="String" />
+		<column name="type" type="int" />
+		<column name="displayorder" type="int" />
+
+		<finder name="Survey" return-type="Collection">
+			<finder-column name="surveyId" />
+		</finder>
+		
+	</entity>
+	
+	<entity name="SurveyQuestionOption" local-service="true" remote-service="false">
+		<column name="surveyQuestionOptionId" type="long" primary="true" />
+		<column name="surveyQuestionId" type="long"/>
+		<column name="question" type="String" />
+		<column name="displayorder" type="int" />
+
+		<finder name="SurveyQuestion" return-type="Collection">
+			<finder-column name="surveyQuestionId" />
+		</finder>
+	</entity>
+	
+	<entity name="SurveyAnswer" local-service="true" remote-service="false">
+		<column name="surveyAnswerId" type="long" primary="true" />
+		<column name="surveyQuestionId" type="long"/>
+		<column name="surveyId" type="long"/>
+		<column name="userId" type="long" />
+		<column name="answer" type="String" />
+
+		<finder name="Survey" return-type="Collection">
+			<finder-column name="surveyId" />
+		</finder>
+
+		<finder name="SurveyQuestion" return-type="Collection">
+			<finder-column name="surveyQuestionId" />
+		</finder>
+		
+	</entity>
+	
+		<entity name="Survey" local-service="true" remote-service="false">
+		<column name="surveyId" type="long" primary="true" />
+		<column name="communityId" type="long"/>
+		<column name="surveyName" type="String"/>
+		
+		<finder name="Community" return-type="Collection">
+			<finder-column name="communityId" />
+		</finder>
+
+		
+	</entity>
+</service-builder>

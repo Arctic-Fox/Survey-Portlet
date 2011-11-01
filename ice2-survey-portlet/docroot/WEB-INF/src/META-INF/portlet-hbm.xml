@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.jhu.cvrg.portal.survey.model.SurveyQuestion" />
+	<import class="com.jhu.cvrg.portal.survey.model.SurveyQuestionOption" />
+	<import class="com.jhu.cvrg.portal.survey.model.SurveyAnswer" />
+	<import class="com.jhu.cvrg.portal.survey.model.Survey" />
+	<class name="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionImpl" table="JHU_SurveyQuestion">
+		<cache usage="read-write" />
+		<id name="surveyQuestionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="surveyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="question" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="type" column="type_" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="displayorder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.jhu.cvrg.portal.survey.model.impl.SurveyQuestionOptionImpl" table="JHU_SurveyQuestionOption">
+		<cache usage="read-write" />
+		<id name="surveyQuestionOptionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="surveyQuestionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="question" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="displayorder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.jhu.cvrg.portal.survey.model.impl.SurveyAnswerImpl" table="JHU_SurveyAnswer">
+		<cache usage="read-write" />
+		<id name="surveyAnswerId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="surveyQuestionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="surveyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="answer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.jhu.cvrg.portal.survey.model.impl.SurveyImpl" table="JHU_Survey">
+		<cache usage="read-write" />
+		<id name="surveyId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="communityId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="surveyName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

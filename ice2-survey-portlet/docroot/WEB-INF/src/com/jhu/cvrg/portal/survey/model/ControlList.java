@@ -16,8 +16,6 @@ public class ControlList {
 	public ControlList(){
 		questionList = new ArrayList<QuestionItem>();
 	}
-	
-
 
 	public void addQuestionItem(type questionType, String addQuestionText, boolean answerOption) {
 		QuestionItem item;

@@ -30,10 +30,14 @@
 			<ice:inputTextarea id="txtInput" value="#{surveyBacking.currentTextAnswer}"/>
 		</ice:panelGroup>
 
-		<ice:panelGroup id="optionQuestionDisplay" rendered="#{surveyBacking.optionQuestion}">
+		<ice:panelGroup id="singleOptionQuestionDisplay" rendered="#{surveyBacking.singleOptionQuestion}">
 			<ice:selectOneRadio binding="#{surveyBacking.radioOptions}" id="radioOptions" layout="pageDirection" value="#{surveyBacking.radioAnswer}">
 			</ice:selectOneRadio>	
-		
+		</ice:panelGroup>
+
+		<ice:panelGroup id="MultiOptionQuestionDisplay" rendered="#{surveyBacking.multiOptionQuestion}">
+			<ice:selectManyCheckbox binding="#{surveyBacking.checkOptions}" id="checkOptions" layout="pageDirection" value="#{surveyBacking.checkAnswer}">
+			</ice:selectManyCheckbox>	
 		</ice:panelGroup>
 	
 		<ice:commandButton actionListener="#{surveyBacking.next}" id="btnNext" value="Next"/>

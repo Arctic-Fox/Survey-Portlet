@@ -21,6 +21,7 @@ limitations under the License.
 import java.io.IOException;
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.ReadOnlyException;
@@ -39,13 +40,21 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 
 public class ResourceUtility {
 
 	private final static LiferayFacesContext liferayFacesContext = LiferayFacesContext.getInstance();
 	private final static PortletPreferences prefs = liferayFacesContext.getPortletPreferences();
-	public static enum type {TEXT, BOOLEAN, OPTION, ANSWER};
+	public static enum type {TEXT, BOOLEAN, SINGLEOPTION, MULTIOPTION, ANSWER, SCALE, STRONGLY};
+	
+	public static String getPortletId(){
+		
+		PortletRequest request = (PortletRequest) liferayFacesContext.getExternalContext().getRequest();	
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		return String.valueOf(themeDisplay.getPlid());
+	}
 	
 	public ControlList getControlList(){
 		ControlList controlList = (ControlList) liferayFacesContext
@@ -71,12 +80,12 @@ public class ResourceUtility {
 	}
 	
 	public static long getPrefSurveyId(){
-		return Long.valueOf(prefs.getValue("surveyid", "0"));
+		return Long.valueOf(prefs.getValue(getPortletId() + "_surveyid", "0"));
 	}
 	
 	public static void savePreferences(long surveyId){
 		try {
-			prefs.setValue("surveyid", String.valueOf(surveyId));
+			prefs.setValue(getPortletId() + "_surveyid", String.valueOf(surveyId));
 			prefs.store();
 		} catch (ReadOnlyException e) {
 			printErrorMessage("Resource Utility");

@@ -46,9 +46,12 @@
 			<h:outputText value="Answer type:" />
 			<ice:selectOneMenu id="questiontype"
 				value="#{configurationBacking.selectedQuestionType}">
-				<f:selectItem id="type0" itemLabel="List of Options" itemValue="0" />
-				<f:selectItem id="type1" itemLabel="Yes/No" itemValue="1" />
 				<f:selectItem id="type2" itemLabel="Text" itemValue="2" />
+				<f:selectItem id="type1" itemLabel="Yes/No" itemValue="1" />
+				<f:selectItem id="type0" itemLabel="List of Options (Select One)" itemValue="0" />
+				<f:selectItem id="type5" itemLabel="List of Options (Select Multiple)" itemValue="5" />
+				<f:selectItem id="type3" itemLabel="1-5 scale" itemValue="3"/>
+				<f:selectItem id="type4" itemLabel="Strongly - Strongly" itemValue="4"/>
 			</ice:selectOneMenu>
 		</ice:panelGrid>
 		<p />

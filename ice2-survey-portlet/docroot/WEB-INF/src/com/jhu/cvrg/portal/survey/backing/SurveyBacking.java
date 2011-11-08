@@ -1,5 +1,6 @@
 package com.jhu.cvrg.portal.survey.backing;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UISelectItem;
 import javax.faces.event.ActionEvent;
 
+import com.icesoft.faces.component.ext.HtmlSelectManyCheckbox;
 import com.icesoft.faces.component.ext.HtmlSelectOneRadio;
 import com.jhu.cvrg.portal.survey.model.AnswerItem;
 import com.jhu.cvrg.portal.survey.model.SurveyQuestion;
@@ -37,20 +39,23 @@ limitations under the License.
 
 @ManagedBean(name = "surveyBacking")
 @ViewScoped
-public class SurveyBacking {
+public class SurveyBacking implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private long surveyId = ResourceUtility.getPrefSurveyId();
-	private boolean textQuestion, optionQuestion, showSurvey, surveyDone, errorPanel, surveyStart;
-	private enum visiblePanel {START, TEXT, BOOLEAN, OPTION, END, ERROR};
+	private boolean textQuestion, multiOptionQuestion, singleOptionQuestion, showSurvey, surveyDone, errorPanel, surveyStart;
+	private enum visiblePanel {START, TEXT, BOOLEAN, SINGLEOPTION, MULTIOPTION, END, ERROR};
 	
-	private List<SurveyQuestion> surveyQuestions = DataManager.getSurveyQuestions(surveyId);;
+	private List<SurveyQuestion> surveyQuestions = DataManager.getSurveyQuestions(surveyId);
 	private SurveyQuestion currentQuestion = null;
 	private int currentQuestionNumber = 0;
 	private String currentQuestionText = "";
 	private String currentTextAnswer;
 	private String surveyName = "";
 	private HtmlSelectOneRadio radioOptions;
+	private HtmlSelectManyCheckbox checkOptions;
 	private String radioAnswer;
+	private String[] checkAnswer;
 	
 	private ArrayList<AnswerItem> answers;
 	
@@ -58,6 +63,7 @@ public class SurveyBacking {
 
 	
 	public SurveyBacking(){
+		surveyQuestions = DataManager.getSurveyQuestions(surveyId);
 		if(surveyId != 0L){
 			Initialize();
 		}
@@ -68,21 +74,23 @@ public class SurveyBacking {
 		surveyStart = false;
 		showSurvey = true;
 		textQuestion = false;
-		optionQuestion = false;
+		multiOptionQuestion = false;
+		singleOptionQuestion = false;
 		surveyDone = false;
 		errorPanel = false;
 		
 		switch(panel){
-		case START:		surveyStart = true;			
-						showSurvey = false;			break;
-		case TEXT:		textQuestion = true;		break;
-		case BOOLEAN:	optionQuestion = true;		break;
-		case OPTION:	optionQuestion = true;		break;
-		case END:		surveyDone = true;
-						showSurvey = false;			break;
-		case ERROR:		errorPanel = true;
-						showSurvey = false;			break;
-		default:		errorPanel = true;			break;
+		case START:			surveyStart = true;			
+							showSurvey = false;					break;
+		case TEXT:			textQuestion = true;				break;
+		case BOOLEAN:		singleOptionQuestion = true;		break;
+		case SINGLEOPTION:	singleOptionQuestion = true;		break;
+		case MULTIOPTION:	multiOptionQuestion = true;			break;
+		case END:			surveyDone = true;
+							showSurvey = false;					break;
+		case ERROR:			errorPanel = true;
+							showSurvey = false;					break;
+		default:			errorPanel = true;					break;
 		}
 	}
 	
@@ -121,7 +129,10 @@ public class SurveyBacking {
 		switch(currentQuestion.getType()){
 		case 1: 	showPanel(visiblePanel.TEXT);		break;
 		case 2:		showBooleanQuestion();          	break;
-		case 3:		showOptionQuestion();				break;
+		case 3:		showSingleOptionQuestion();			break;
+		case 4:		showMultiOptionQuestion();			break;
+		case 5:		showScaleQuestion();				break;
+		case 6:		showStronglyQuestion();				break;
 		default:	showPanel(visiblePanel.ERROR);		break;
 		}	
 	}
@@ -136,7 +147,16 @@ public class SurveyBacking {
 		case 1: 	answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, currentTextAnswer));		break;
 		case 2:		answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, radioAnswer));          	break;
 		case 3:		answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, radioAnswer));				break;
+		case 4:     addMultipleItems();																						break;
+		case 5:		answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, radioAnswer));				break;
+		case 6:		answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, radioAnswer));				break;
 		default:	showPanel(visiblePanel.ERROR);		break;
+		}
+	}
+	
+	private void addMultipleItems(){
+		for(String item : (String[])checkOptions.getSelectedValues()){
+			answers.add(new AnswerItem(currentQuestion.getSurveyQuestionId(), surveyId, item));
 		}
 	}
 	
@@ -161,8 +181,79 @@ public class SurveyBacking {
 		return question;
 	}
 	
+	private void showMultiOptionQuestion(){
+		showPanel(visiblePanel.MULTIOPTION);
+		
+		List<SurveyQuestionOption> options = DataManager.getSurveyQuestionOptions(currentQuestion.getSurveyQuestionId());
+		
+		for(SurveyQuestionOption option : options){
+			UISelectItem item = new UISelectItem();
+			item.setItemValue(option.getSurveyQuestionOptionId());
+			item.setItemLabel(option.getQuestion());
+			checkOptions.getChildren().add(item);
+		}
+	}
+	
+	private void showStronglyQuestion(){
+		showPanel(visiblePanel.SINGLEOPTION);
+		
+		UISelectItem itemOne = new UISelectItem();
+		itemOne.setItemValue("1");
+		itemOne.setItemLabel("Strongly Agree");
+		radioOptions.getChildren().add(itemOne);
+		
+		UISelectItem itemTwo = new UISelectItem();
+		itemTwo.setItemValue("2");
+		itemTwo.setItemLabel("Agree");
+		radioOptions.getChildren().add(itemTwo);
+		
+		UISelectItem itemThree = new UISelectItem();
+		itemThree.setItemValue("3");
+		itemThree.setItemLabel("Neither Agree nor Disagree");
+		radioOptions.getChildren().add(itemThree);
+		
+		UISelectItem itemFour = new UISelectItem();
+		itemFour.setItemValue("4");
+		itemFour.setItemLabel("Disagree");
+		radioOptions.getChildren().add(itemFour);
+		
+		UISelectItem itemFive = new UISelectItem();
+		itemFive.setItemValue("5");
+		itemFive.setItemLabel("Strongly Disagree");
+		radioOptions.getChildren().add(itemFive);
+	}
+	
+	private void showScaleQuestion(){
+		showPanel(visiblePanel.SINGLEOPTION);
+		
+		UISelectItem itemOne = new UISelectItem();
+		itemOne.setItemValue("1");
+		itemOne.setItemLabel("1");
+		radioOptions.getChildren().add(itemOne);
+		
+		UISelectItem itemTwo = new UISelectItem();
+		itemTwo.setItemValue("2");
+		itemTwo.setItemLabel("3");
+		radioOptions.getChildren().add(itemTwo);
+		
+		UISelectItem itemThree = new UISelectItem();
+		itemThree.setItemValue("3");
+		itemThree.setItemLabel("3");
+		radioOptions.getChildren().add(itemThree);
+		
+		UISelectItem itemFour = new UISelectItem();
+		itemFour.setItemValue("4");
+		itemFour.setItemLabel("4");
+		radioOptions.getChildren().add(itemFour);
+		
+		UISelectItem itemFive = new UISelectItem();
+		itemFive.setItemValue("5");
+		itemFive.setItemLabel("5");
+		radioOptions.getChildren().add(itemFive);
+	}
+	
 	private void showBooleanQuestion(){
-		showPanel(visiblePanel.OPTION);
+		showPanel(visiblePanel.SINGLEOPTION);
 		
 		UISelectItem itemYes = new UISelectItem();
 		itemYes.setItemValue("1");
@@ -176,8 +267,8 @@ public class SurveyBacking {
 		radioOptions.getChildren().add(itemNo);
 	}
 
-	private void showOptionQuestion(){
-		showPanel(visiblePanel.OPTION);
+	private void showSingleOptionQuestion(){
+		showPanel(visiblePanel.SINGLEOPTION);
 		
 		List<SurveyQuestionOption> options = DataManager.getSurveyQuestionOptions(currentQuestion.getSurveyQuestionId());
 		
@@ -196,14 +287,6 @@ public class SurveyBacking {
 
 	public void setTextQuestion(boolean textQuestion) {
 		this.textQuestion = textQuestion;
-	}
-
-	public boolean isOptionQuestion() {
-		return optionQuestion;
-	}
-
-	public void setOptionQuestion(boolean optionQuestion) {
-		this.optionQuestion = optionQuestion;
 	}
 
 	public void setShowSurvey(boolean showSurvey) {
@@ -285,6 +368,38 @@ public class SurveyBacking {
 
 	public boolean isSurveyStart() {
 		return surveyStart;
+	}
+
+	public void setCheckOptions(HtmlSelectManyCheckbox checkOptions) {
+		this.checkOptions = checkOptions;
+	}
+
+	public HtmlSelectManyCheckbox getCheckOptions() {
+		return checkOptions;
+	}
+
+	public void setCheckAnswer(String[] checkAnswer) {
+		this.checkAnswer = checkAnswer;
+	}
+
+	public String[] getCheckAnswer() {
+		return checkAnswer;
+	}
+
+	public void setSingleOptionQuestion(boolean singleOptionQuestion) {
+		this.singleOptionQuestion = singleOptionQuestion;
+	}
+
+	public boolean isSingleOptionQuestion() {
+		return singleOptionQuestion;
+	}
+
+	public void setMultiOptionQuestion(boolean multiOptionQuestion) {
+		this.multiOptionQuestion = multiOptionQuestion;
+	}
+
+	public boolean isMultiOptionQuestion() {
+		return multiOptionQuestion;
 	}
 	
 }

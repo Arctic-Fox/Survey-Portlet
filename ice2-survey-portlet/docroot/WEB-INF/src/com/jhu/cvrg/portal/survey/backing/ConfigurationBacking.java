@@ -93,8 +93,17 @@ public class ConfigurationBacking {
 		}else if(selectedQuestionType.equals("1")){//Yes/no
 			controlList.addQuestionItem(ResourceUtility.type.BOOLEAN, addQuestionText, false);
 			switchView(ShowPanel.ADD);
-		}else{//Options
-			controlList.addQuestionItem(ResourceUtility.type.OPTION, addQuestionText, false);
+		}else if(selectedQuestionType.equals("3")){//1-5 Scale
+			controlList.addQuestionItem(ResourceUtility.type.SCALE, addQuestionText, false);
+			switchView(ShowPanel.ADD);
+		}else if(selectedQuestionType.equals("4")){//Strongly
+			controlList.addQuestionItem(ResourceUtility.type.STRONGLY, addQuestionText, false);
+			switchView(ShowPanel.ADD);
+		}else if(selectedQuestionType.equals("5")){//Multiple options
+			controlList.addQuestionItem(ResourceUtility.type.MULTIOPTION, addQuestionText, false);
+			switchView(ShowPanel.ANSWER);
+		}else{//Single Option
+			controlList.addQuestionItem(ResourceUtility.type.SINGLEOPTION, addQuestionText, false);
 			switchView(ShowPanel.ANSWER);
 		}
 	}

@@ -90,10 +90,13 @@ public class DataManager {
 				parentQuestionNumber = item.getParentQuestion();
 			
 			switch (item.getQuestionType()){
-				case TEXT: 		storeQuestion(item, 1); 						break;
-				case BOOLEAN:	storeQuestion(item, 2);							break;
-				case OPTION: 	storeQuestion(item, 3);							break;
-				case ANSWER:	storeAnswerOption(item, parentQuestionNumber);	break;
+				case TEXT: 			storeQuestion(item, 1); 						break;
+				case BOOLEAN:		storeQuestion(item, 2);							break;
+				case SINGLEOPTION: 	storeQuestion(item, 3);							break;
+				case MULTIOPTION:	storeQuestion(item, 4);							break;
+				case SCALE:			storeQuestion(item, 5);							break;
+				case STRONGLY:		storeQuestion(item, 6);							break;
+				case ANSWER:		storeAnswerOption(item, parentQuestionNumber);	break;
 				default: break;
 			}	
 		}
@@ -117,13 +120,8 @@ public class DataManager {
 		try {
 			parentQuestions = SurveyQuestionLocalServiceUtil.findBySurvey(surveyId);
 			
-			System.out.println("Number of questions found: " + parentQuestions.size());
-			System.out.println("Parent Question Number: " + parentQuestionNumber);
-			
 			for(SurveyQuestion question : parentQuestions){
-				
-				System.out.println("Display Order: " + question.getDisplayorder());
-				
+
 				if(question.getDisplayorder() == parentQuestionNumber){
 					questionId = question.getSurveyQuestionId();
 					SurveyQuestionOptionLocalServiceUtil.addSurveyQuestionOption(questionId, item.getQuestionText(), 0);

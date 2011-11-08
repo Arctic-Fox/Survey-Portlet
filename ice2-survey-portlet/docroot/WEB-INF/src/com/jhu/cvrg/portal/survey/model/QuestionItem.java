@@ -22,11 +22,14 @@ public class QuestionItem {
 	public String getItemType(){
 		String itemType = "";
 		switch(questionType){
-			case TEXT:		itemType="Free Response Text"; 				break;
-			case BOOLEAN:	itemType="Yes/No"; 							break;
-			case OPTION:	itemType="Multiple Choice (Single Option)"; break;
-			case ANSWER:	itemType="Multiple Choice Option"; 			break;
-			default:		itemType="Undefined"; 						break;
+			case TEXT:			itemType="Free Response Text"; 					break;
+			case BOOLEAN:		itemType="Yes/No"; 								break;
+			case SINGLEOPTION:	itemType="Multiple Choice (Single Option)"; 	break;
+			case MULTIOPTION:	itemType="Multiple Choice (Multiple Option)";	break;
+			case SCALE:			itemType="1-5 Scale";							break;
+			case STRONGLY:		itemType="Strongly - Strongly";					break;
+			case ANSWER:		itemType="Multiple Choice Option"; 				break;
+			default:			itemType="Undefined"; 							break;
 		}
 		
 		return itemType;

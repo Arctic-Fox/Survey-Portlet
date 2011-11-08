@@ -5,6 +5,8 @@
 	<portlet>
 		<portlet-name>ice2-survey</portlet-name>
 		<icon>/icon.png</icon>
+		<preferences-unique-per-layout>true</preferences-unique-per-layout>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<instanceable>false</instanceable>
 		<header-portlet-css>/css/rime-portlet.css</header-portlet-css>
 		<header-portlet-css>/css/main.css</header-portlet-css>

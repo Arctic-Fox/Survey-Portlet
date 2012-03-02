@@ -31,4 +31,7 @@ Upload the file through the Liferay GUI plugins installation screen.
  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  See the License for the specific language governing permissions and
  limitations under the License.
+
+This project incorporates tools whose development was funded in part by the NIH 
+through the NHLBI grant: The Cardiovascular Research Grid (R24HL085343)
  */
